@@ -56,14 +56,5 @@ class Store {
 module.exports = new Store(); // Export an instance of the Store class
 
 
-// pass a note through
-    // define a note and run a rule (if) ? how does a person add a note. can't be empty, etc
-    // define a new note with a uuid and data ... deconstruct (title, text)
-    // so you can use it 
-    // define a newNote: Add a unique id to the note using uuid package
-  
+ 
 
-    // Get all notes, add the new note, write all the updated notes, return the newNote
-    // do the return to the data
-    // get the note and chain together
-    // esport as a new store
