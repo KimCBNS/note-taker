@@ -1,8 +1,9 @@
 // heavy lifting file
 const fs = require('fs')
 const util = require('util')  // read about utils
+const path = require('path');
+const { v4: uuidv4 } = require('uuid'); // Importing the v4 method from uuid
 
-// look up uuid (install and copy as listed in class activity)
 
 const readFileDisplay = util.promisify(fs.readFile);
 const writeFileDisplay = util.promisify(fs.writeFile);
@@ -29,8 +30,33 @@ class Store {
     })
   }
 
+
+  // This method will read the existing notes, add a new note with a unique ID, and then write the updated notes back to the JSON file.
   addNote(note) {
-    // pass a note through
+    // first get the new note ready
+    const { title, text } = note;
+    if (!title || !text) {
+      throw new Error("Note 'title' and 'text' cannot be blank");
+    }
+
+    const newNote = {
+      id: uuidv4(),
+      title,
+      text
+    };
+ // then get all the notes and add the new note and return the new list
+    return this.getNotes()
+      .then((notes) => [...notes, newNote])
+      .then((updatedNotes) => this.write(updatedNotes))
+      .then(() => newNote);
+  }
+
+}
+
+module.exports = new Store(); // Export an instance of the Store class
+
+
+// pass a note through
     // define a note and run a rule (if) ? how does a person add a note. can't be empty, etc
     // define a new note with a uuid and data ... deconstruct (title, text)
     // so you can use it 
@@ -41,8 +67,3 @@ class Store {
     // do the return to the data
     // get the note and chain together
     // esport as a new store
-    
-  }
-}
-
-module.exports = new Store(); // Export an instance of the Store class
